@@ -59,7 +59,7 @@ public class CFieldPartyMember : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        ECurrState = EMovingStates.eIdle;
+        eCurrState = EMovingStates.eIdle;
 
         m_v3Movement = Vector3.zero;
 
@@ -79,6 +79,10 @@ public class CFieldPartyMember : MonoBehaviour
 
     private void SetUpStateMachine()
     {
+        m_afdEnterstates = new fdStateFunction[(int) EMovingStates.eMovingStatesSize];
+        m_afdUpdates = new fdStateFunction[(int)EMovingStates.eMovingStatesSize];
+        m_afdExitstates = new fdStateFunction[(int)EMovingStates.eMovingStatesSize];
+
         for (int iLoop = 0; iLoop < (int)EMovingStates.eMovingStatesSize; iLoop++)
         {
             m_afdEnterstates[iLoop] = null;
@@ -86,6 +90,11 @@ public class CFieldPartyMember : MonoBehaviour
             m_afdExitstates[iLoop] = null;
         }
 
+        m_afdUpdates[(int)EMovingStates.eIdle] += HandleInput;
+        m_afdUpdates[(int)EMovingStates.eIdle] += UpdateIdle;
+
+        m_afdUpdates[(int)EMovingStates.eMove] += HandleInput;
+        m_afdUpdates[(int)EMovingStates.eMove] += UpdateMove;
     }
 
 
@@ -106,7 +115,7 @@ public class CFieldPartyMember : MonoBehaviour
         {
             m_v3Movement -= Camera.main.transform.right;
         }
-        else  if (Input.GetKey(KeyCode.A))
+        else  if (Input.GetKey(KeyCode.D))
         {
             m_v3Movement += Camera.main.transform.right;
         }
@@ -124,5 +133,23 @@ public class CFieldPartyMember : MonoBehaviour
 
         m_rbOwnBody.velocity = m_v3Movement * m_fSpeed;
 
+    }
+
+    void UpdateIdle()
+    {
+        if ( Vector3.zero != m_v3Movement)
+        {
+            ECurrState = EMovingStates.eMove;
+        }
+    }
+
+    void UpdateMove()
+    {
+        if (Vector3.zero == m_v3Movement)
+        {
+            ECurrState = EMovingStates.eIdle;
+        }
+
+        Move();
     }
 }

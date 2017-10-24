@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class CPartyManager : MonoBehaviour
 {
@@ -22,12 +23,29 @@ public class CPartyManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Assert.raiseExceptions = true;
 
+        m_listECurrentChars = new List<ECharacters>();
+        m_listEReserveChars = new List<ECharacters>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void MoveFromReserveToParty(ECharacters eChar)
     {
+        Assert.IsTrue(m_listEReserveChars.Contains(eChar));
+        Assert.IsFalse(m_listECurrentChars.Contains(eChar));
 
+        m_listEReserveChars.Remove(eChar);
+        m_listECurrentChars.Add(eChar);
     }
+
+    public void MoveFromPartyToReserve(ECharacters eChar)
+    {
+        Assert.IsTrue(m_listECurrentChars.Contains(eChar));
+        Assert.IsFalse(m_listEReserveChars.Contains(eChar));
+
+        m_listECurrentChars.Remove(eChar);
+        m_listEReserveChars.Add(eChar);
+    }
+
+
 }

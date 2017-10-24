@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 136546472982473028}
   - component: {fileID: 23240646730975898}
   - component: {fileID: 114184826204356502}
+  - component: {fileID: 114363982895860408}
   m_Layer: 0
   m_Name: Squall_Field
   m_TagString: Untagged
@@ -94,6 +95,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_fSpeed: 1.33
+--- !u!114 &114363982895860408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1939700754636996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ee918f23c08ae46bf3e11c56b035e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_goFieldPartyMember: {fileID: 1939700754636996}
+  m_goCombatPartyMember: {fileID: 1489963970373074, guid: 63cfec468a078364bb50e5e6ff5294dd,
+    type: 2}
 --- !u!136 &136546472982473028
 CapsuleCollider:
   m_ObjectHideFlags: 1
