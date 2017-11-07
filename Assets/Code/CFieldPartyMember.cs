@@ -53,6 +53,7 @@ public class CFieldPartyMember : MonoBehaviour
     private float m_fSpeed;
     private Vector3 m_v3Movement;
     private Rigidbody m_rbOwnBody;
+    private Transform m_trOwnTransform;
 
 
 
@@ -64,6 +65,8 @@ public class CFieldPartyMember : MonoBehaviour
         m_v3Movement = Vector3.zero;
 
         m_rbOwnBody = this.GetComponent<Rigidbody>();
+
+        m_trOwnTransform = this.GetComponent<Transform>();
 
         SetUpStateMachine();
     }
@@ -123,6 +126,7 @@ public class CFieldPartyMember : MonoBehaviour
         m_v3Movement.Normalize();
     }
 
+    //Move character if m_v3Movement is big enough
     private void Move()
     {
         if (0.001f > m_v3Movement.sqrMagnitude)
@@ -131,10 +135,18 @@ public class CFieldPartyMember : MonoBehaviour
             return;
         }
 
+        Vector3 v3Up = m_trOwnTransform.up;
+        Vector3.OrthoNormalize( ref v3Up, ref m_v3Movement);
+
+       
+       
         m_rbOwnBody.velocity = m_v3Movement * m_fSpeed;
+        Debug.Log("Executing rotation");
 
     }
 
+    //Update for idle state 
+    //Changes to movement if movement vector is not 0
     void UpdateIdle()
     {
         if ( Vector3.zero != m_v3Movement)
@@ -143,6 +155,8 @@ public class CFieldPartyMember : MonoBehaviour
         }
     }
 
+    //Update for move state
+    //Becomes idle is movement vector is small enough
     void UpdateMove()
     {
         if (Vector3.zero == m_v3Movement)

@@ -27,6 +27,20 @@ public class CCamera : MonoBehaviour
             eCurrentState = value;
         }
     }
+
+    public Vector3 V3Offset
+    {
+        get
+        {
+            return m_v3Offset;
+        }
+
+        set
+        {
+            m_v3Offset = value;
+        }
+    }
+
     //
 
     //Singleton section 
@@ -47,8 +61,7 @@ public class CCamera : MonoBehaviour
     private Vector3 m_v3Offset;
 
     private Transform m_trSelf;
-
-    //private Vector3 m_v3TargetPosition;
+    
     
 
     // Use this for initialization
@@ -93,5 +106,5 @@ public class CCamera : MonoBehaviour
         }
     }
 
-
+   
 }
